@@ -1,0 +1,391 @@
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ROYAL CALCULATOR</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+    font-family: 'Vazirmatn', sans-serif;
+    background:
+        radial-gradient(circle at 20% 20%, #29354a, transparent 40%),
+        radial-gradient(circle at 80% 80%, #342b20, transparent 40%),
+        #090d16;
+    color: #fff;
+}
+
+.calculator {
+    width: 100%;
+    max-width: 430px;
+    padding: 30px;
+    border: 1px solid rgba(218,180,105,.35);
+    border-radius: 28px;
+    background: linear-gradient(145deg, #192233, #101724);
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.65),
+        inset 0 1px 1px rgba(255,255,255,.08);
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.logo {
+    color: #d9b878;
+    font-size: 13px;
+    letter-spacing: 5px;
+    font-weight: 700;
+}
+
+.header h1 {
+    font-size: 25px;
+    margin-top: 10px;
+    color: #f2dfb9;
+}
+
+.header p {
+    color: #8995a7;
+    font-size: 12px;
+    margin-top: 7px;
+}
+
+.display {
+    background: #090f1b;
+    border: 1px solid #384357;
+    border-radius: 17px;
+    padding: 20px;
+    margin-bottom: 20px;
+    min-height: 125px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: left;
+    direction: ltr;
+    overflow: hidden;
+}
+
+.display-label {
+    color: #c2a56c;
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+#expression {
+    color: #9ba7b8;
+    font-size: 15px;
+    overflow-wrap: anywhere;
+}
+
+#result {
+    color: #f0d49c;
+    font-size: clamp(24px, 7vw, 34px);
+    font-weight: 600;
+    overflow-wrap: anywhere;
+    min-height: 42px;
+}
+
+.inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+input, select {
+    width: 100%;
+    min-width: 0;
+    padding: 13px 10px;
+    background: #111b2b;
+    border: 1px solid #35445c;
+    border-radius: 12px;
+    color: #fff;
+    outline: none;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+input:focus, select:focus {
+    border-color: #d2ad6d;
+    box-shadow: 0 0 12px #d2ad6d25;
+}
+
+select {
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    transition: .2s ease;
+}
+
+.calculate {
+    width: 100%;
+    padding: 15px;
+    border-radius: 13px;
+    background: linear-gradient(135deg, #e5c58c, #a77d3e);
+    color: #17120b;
+    font-weight: 800;
+    font-size: 16px;
+    box-shadow: 0 6px 20px #b38a4b30;
+}
+
+.calculate:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.1);
+}
+
+.calculate:active {
+    transform: scale(.98);
+}
+
+.clear {
+    width: 100%;
+    margin-top: 10px;
+    padding: 12px;
+    border-radius: 12px;
+    background: #293448;
+    color: #d4dce8;
+    font-size: 13px;
+}
+
+.history {
+    margin-top: 25px;
+    border-top: 1px solid #344052;
+    padding-top: 18px;
+}
+
+.history-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #d9bd89;
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+#historyList {
+    list-style: none;
+    max-height: 130px;
+    overflow-y: auto;
+}
+
+#historyList li {
+    direction: ltr;
+    text-align: left;
+    padding: 9px 10px;
+    margin-bottom: 7px;
+    background: #111b2b;
+    border-radius: 9px;
+    color: #b9c3d1;
+    font-size: 12px;
+    overflow-wrap: anywhere;
+}
+
+#historyList:empty::after {
+    content: "هنوز محاسبه‌ای انجام نشده است";
+    display: block;
+    text-align: center;
+    color: #718096;
+    font-size: 12px;
+    padding: 10px;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 23px;
+    color: #68768b;
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+@media(max-width: 420px) {
+    .calculator {
+        padding: 21px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="calculator">
+
+    <div class="header">
+        <div class="logo">SPECIAL CALCULATOR</div>
+        <h1>ماشین حساب اختصاصی احمدی</h1>
+        <p>«نخست با ذهن حساب کُن ، سپس نتیجه را بررسی کُن»</p>
+    </div>
+
+    <div class="display">
+        <div class="display-label">CALCULATION</div>
+        <div id="expression">Ready...</div>
+        <div id="result">0</div>
+    </div>
+
+    <div class="inputs">
+        <input type="number" id="number1"
+               placeholder="عدد اول" step="any">
+
+        <input type="number" id="number2"
+               placeholder="عدد دوم" step="any">
+    </div>
+
+    <select id="operator">
+        <option value="+">جمع (+)</option>
+        <option value="-">تفریق (-)</option>
+        <option value="*">ضرب (*)</option>
+        <option value="/">تقسیم (/)</option>
+        <option value="**">توان (**)</option>
+        <option value="%">باقی‌مانده (%)</option>
+        <option value="//">تقسیم صحیح (//)</option>
+    </select>
+
+    <button class="calculate" onclick="calculate()">
+        محاسبه کن ✦
+    </button>
+
+    <button class="clear" onclick="clearCalculator()">
+        پاک کردن ورودی‌ها
+    </button>
+
+    <div class="history">
+        <div class="history-title">
+            <span>تاریخچه محاسبات</span>
+            <span>✧</span>
+        </div>
+
+        <ul id="historyList"></ul>
+    </div>
+
+    <div class="footer">
+        DESIGNED WITH ELEGANCE
+    </div>
+
+</div>
+
+<script>
+
+function calculate() {
+
+    const number1 = document.getElementById("number1").value;
+    const number2 = document.getElementById("number2").value;
+
+    const operator = document.getElementById("operator").value;
+
+    const resultElement = document.getElementById("result");
+    const expressionElement = document.getElementById("expression");
+
+    if (number1.trim() === "" || number2.trim() === "") {
+        resultElement.innerText = "ورودی ناقص است";
+        expressionElement.innerText = "Please enter both numbers";
+        return;
+    }
+
+    const a = Number(number1);
+    const b = Number(number2);
+
+    if (!Number.isFinite(a) || !Number.isFinite(b)) {
+        resultElement.innerText = "عدد نامعتبر";
+        return;
+    }
+
+    if ((operator === "/" || operator === "%" || operator === "//") && b === 0) {
+        resultElement.innerText = "تقسیم بر صفر مجاز نیست";
+        return;
+    }
+
+    let result;
+
+    switch(operator) {
+
+        case "+":
+            result = a + b;
+            break;
+
+        case "-":
+            result = a - b;
+            break;
+
+        case "*":
+            result = a * b;
+            break;
+
+        case "/":
+            result = a / b;
+            break;
+
+        case "**":
+            result = a ** b;
+            break;
+
+        case "%":
+            result = a % b;
+            break;
+
+        case "//":
+            result = Math.floor(a / b);
+            break;
+    }
+
+    if (!Number.isFinite(result)) {
+        resultElement.innerText = "نتیجه قابل نمایش نیست";
+        return;
+    }
+
+    const formattedResult = Number(result.toPrecision(12));
+
+    expressionElement.innerText = `${a} ${operator} ${b}`;
+
+    resultElement.innerText = formattedResult;
+
+    addToHistory(a, operator, b, formattedResult);
+}
+
+function addToHistory(a, operator, b, result) {
+
+    const historyList = document.getElementById("historyList");
+
+    const item = document.createElement("li");
+
+    item.innerText = `${a} ${operator} ${b} = ${result}`;
+
+    historyList.prepend(item);
+
+    if (historyList.children.length > 10) {
+        historyList.lastElementChild.remove();
+    }
+}
+
+function clearCalculator() {
+
+    document.getElementById("number1").value = "";
+    document.getElementById("number2").value = "";
+
+    document.getElementById("result").innerText = "0";
+
+    document.getElementById("expression").innerText = "Ready...";
+}
+
+</script>
+
+</body>
+</html>
